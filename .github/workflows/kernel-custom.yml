@@ -1,4 +1,4 @@
-name: Build Custom Android Kernel
+name: Android 内核构建-自定义
 
 # 适配 Node.js 24
 env:
@@ -13,7 +13,7 @@ on:
     inputs:
       # ==================== 内核版本配置 ====================
       android_version:
-        description: "Android version"
+        description: "Android 版本"
         required: true
         type: choice
         options:
@@ -25,7 +25,7 @@ on:
           - android17
         default: android12
       kernel_version:
-        description: "Kernel version"
+        description: "内核版本"
         required: true
         type: choice
         options:
@@ -37,17 +37,17 @@ on:
           - "6.18"
         default: "5.10"
       sub_level:
-        description: "Kernel sublevel (e.g., 66, 198, X)"
+        description: "子版本号 (如 66, 198, X)"
         required: true
         type: string
         default: "66"
       os_patch_level:
-        description: "OS patch level (e.g., 2022-01, lts)"
+        description: "安全补丁级别 (如 2022-01, lts)"
         required: true
         type: string
         default: "2022-01"
       revision:
-        description: "Revision (e.g., r11). Leave blank to use the month branch/latest release (recommended); set it to pin that month's exact _<revision> release tag, which fails the build if missing; ignored for lts"
+        description: "修订版本 (如 r11)。留空 = 用该月分支/最新发布（推荐）；填写 = 精确 pin 到该月的 _<revision> 发布 tag，不存在会构建失败；lts 下无效"
         required: false
         type: string
         default: ""
@@ -55,60 +55,60 @@ on:
       # ==================== KernelSU 配置 ====================
       # KernelSU 变体固定为 BakaSU
       kernelsu_branch:
-        description: "BakaSU branch (main/builtin/custom commit hash; leave blank to use the default)"
+        description: "KSU 分支 (main/builtin/自定义commit hash，留空使用默认)"
         required: false
         type: string
         default: ""
 
       # ==================== 可选配置 ====================
       version:
-        description: "Custom version name (optional)"
+        description: "自定义版本名 (可选)"
         required: false
         type: string
       build_time:
-        description: "Custom build time (optional; enter N or leave blank to use the current UTC time)"
+        description: "自定义构建时间 (可选，N或留空=当前UTC)"
         required: false
         type: string
         default: "Sun Dec 01 08:10:00 UTC 2024"
 
       # ==================== 功能开关 ====================
       clean_build:
-        description: "Clean build (without KernelSU, SUSFS, or optional patches)"
+        description: "清洁构建 (不集成 KernelSU、SUSFS 和可选补丁)"
         type: boolean
         default: false
 
       use_zram:
-        description: "Enable enhanced ZRAM algorithms"
+        description: "启用 ZRAM 增强算法"
         required: true
         type: boolean
         default: false
       use_bbg:
-        description: "Enable the BBG anti-brick patch"
+        description: "启用 BBG 防格机"
         required: true
         type: boolean
         default: false
       use_rekernel:
-        description: "Enable Re-Kernel drivers"
+        description: "启用 Re-Kernel 驱动"
         required: false
         type: boolean
         default: false
       cve_2026_43499_patch:
-        description: "Apply the CVE-2026-43499 rtmutex patch series"
+        description: "应用 CVE-2026-43499 rtmutex 修复链"
         required: false
         type: boolean
         default: true
       cancel_susfs:
-        description: "Disable SUSFS"
+        description: "禁用 SUSFS"
         required: true
         type: boolean
         default: false
       supp_op:
-        description: "Enable OnePlus 8E support"
+        description: "启用一加 8E 支持"
         required: false
         type: boolean
         default: false
       droidspaces:
-        description: "Droidspaces container support (5.10-6.6: slot patch options; 6.12+: on/off)"
+        description: "Droidspaces 容器支持 (5.10~6.6: 槽位补丁, 6.12+: 开/关)"
         required: false
         type: choice
         options:
@@ -118,17 +118,17 @@ on:
           - "345"
         default: "off"
       droidspaces_ntsync:
-        description: "Enable NTSync support for Droidspaces containers (requires Droidspaces to be enabled)"
+        description: "启用 Droidspaces 容器 NTSync 支持（需启用 Droidspaces）"
         required: false
         type: boolean
         default: false
       build_bypass:
-        description: "Build both standard and Bypass kernels"
+        description: "同时构建普通内核和 Bypass 内核"
         required: false
         type: boolean
         default: false
       use_nomount:
-        description: "Enable NoMount mount support (requires the companion module)"
+        description: "启用 NoMount 挂载元模块（需配套模块）"
         required: false
         type: boolean
         default: false
